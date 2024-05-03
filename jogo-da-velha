@@ -1,0 +1,74 @@
+#Jogo da velha em Python
+
+tabuleiro = [' ',' ',' ',' ',' ',' ',' ',' ',' ']
+
+def print_tabuleiro():
+    print()
+    print('_', tabuleiro[0], '_|_', tabuleiro[1], '_|_', tabuleiro[2], '_')
+    print('_', tabuleiro[3], '_|_', tabuleiro[4], '_|_', tabuleiro[5], '_')
+    print('_', tabuleiro[6], '_|_', tabuleiro[7], '_|_', tabuleiro[8], '_')
+    print()
+    
+print_tabuleiro()
+
+def turnos ():
+    
+    print('Jogador 1, escolha X ou O: ')
+    if input() == 'X':
+        jogador1 = 'X'
+        jogador2 = 'O'
+    else:
+        jogador1 = 'O'
+        jogador2 = 'X'
+        
+    print('Jogador 1 é: ', jogador1)
+    print('Jogador 2 é: ', jogador2)
+    
+    return jogador1, jogador2
+
+def ganhador():
+    lista = [(0, 1, 2), (3,4,5), (6,7,8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]
+    
+    for i in lista:
+        if  tabuleiro[i[0]] == tabuleiro[i[1]] == tabuleiro[i[2]] == 'X':
+            print('Jogador 1 ganhou!')
+            return True
+        elif tabuleiro[i[0]] == tabuleiro[i[1]] == tabuleiro[i[2]] == 'O':
+            print('Jogador 2 ganhou!')
+            return True
+
+    return False
+
+
+def jogo():
+    jogador1, jogador2 = turnos()
+
+    while " " in tabuleiro and not ganhador():
+        print()
+        print('Jogador 1, escolha uma posição de 1 a 9')
+        posicao = int(input())
+        if tabuleiro[posicao-1] == ' ':
+            tabuleiro[posicao-1] = jogador1
+            print_tabuleiro()
+        else:
+            print("Posição já ocupada, escolha outra: ")
+            continue
+        
+        if ganhador():
+            break
+        
+        print()
+        print('Jogador 2, escolha uma posição de 1 a 9')
+        posicao = int(input())
+        if tabuleiro[posicao-1] not in ['X', 'O']:
+            tabuleiro[posicao-1] = jogador2
+            print_tabuleiro()
+        else:
+            print("Posição já ocupada, escolha outra: ")
+            continue
+     
+        if ' ' not in tabuleiro and not ganhador():
+            print(' O jogo terminou em empate!')
+
+
+jogo()
